@@ -1,3 +1,4 @@
+
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -12,6 +13,16 @@ module.exports = {
     devtool: "eval-source-map",
     devServer: {
         watchFiles: ["./src/template.html"],
+        host: '0.0.0.0', // This allows the server to be accessible from other devices on the same network
+        port: 8080, // The port number on which the server will run
+        historyApiFallback: true, // Enables fallback for single page apps
+        client: {
+            logging: 'info', // Sets the log level in the browser
+            overlay: {
+                errors: true, // Shows a full-screen overlay in the browser when there are compiler errors
+                warnings: false, // Disables warnings overlay
+            },
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -22,16 +33,21 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                use: ["css-loader", "style-loader"],
+                use: ["style-loader", "css-loader"],
             },
             {
                 test: /\.html$/i,
                 loader: "html-loader",
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|jpg|jpeg|gif)$/i,
                 type: "asset/resource",
-            }
+            },
+            {
+                test: /\.svg$/i,
+                type: "asset/inline",
+            },
+            
         ],
     },
 }
