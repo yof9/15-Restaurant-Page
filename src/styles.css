@@ -55,17 +55,19 @@ header > nav {
 
     .btn{
         padding: calc(.125 * var(--fse, 1em)) calc(.5 * var(--fse, 1em));
+
         border: none;
         border-radius: 15%;
+        
         background-color: transparent;
         font-size: calc(.625 * var(--fsr, 1rem));
+        text-align: center;
         color: var(--clr-light, rgb(255 255 255));        
     }
     .btn:hover {
-        box-shadow: inset 0 0 1em var(--clr-light, rgb(255 255 255));
         cursor: pointer;
     }
-    div{
+    .btn.active div{
         width: 100%;
         border-bottom: calc(.1 * var(--fse, 1em)) solid var(--clr-light, rgb(255 255 255));
     }
