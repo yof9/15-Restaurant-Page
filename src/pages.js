@@ -1,25 +1,20 @@
+
 export default (function (){
 
     // create cach object
-    const pages = {};
-    function renderPage(html, main, page) {
-        
-        // get page name
-        page = page || "home";
+    const pages = [];
 
-        // If already on page
-        if (dom.html.classList.contains(page)) return;
-
-        // Cache
-        pages[page] = pages[page] || createMain(page)
-        
-        // apply class and render main content for page
-        html.className = page;
-        main.innerHTML = pages[page];
-    }
-
-
-    function createMain(page){
+    function createPages(){
+        for(let page of ["home", "menu", "about"]) {
+            const pageDiv = document.createElement("div");
+            pageDiv.id = page;
+            pageDiv.classList.add("content");
+            pageDiv.innerHTML = createContent(page);
+            pages.push(pageDiv);
+        }
+        return pages;
+    } 
+    function createContent(page) {
         switch(page){
             case "home":
                 return `
@@ -28,15 +23,18 @@ export default (function (){
                             <p><span class="strong">Welcome!!</span> We pride ourselfs on being the premier hotspot for vegan foodies in <span class="strong">Los Angeles</span>. We combine a carefully selected list of vegan Delicacies with superb Fine Dining expierence, all the while maintaining that homey atmosphere vegans look for.</p>
                         </div>
                     </div>
-                    <div class="image-wrapper">
+                    <div class="image-container">
                         <button class="previous">previous</button>
                         <button class="next">next</button>
+                        <div class="image-wrapper"><div>
                     </div>`;
             case "menu":
-                return `                    <div class="image-wrapper">
-                        <button class="previous">previous</button>
-                        <button class="next">next</button>
-                    </div>`
+                return <div class="menu-container">
+                        <div class="food">
+                            
+                        </div>
+                        <div class="drink">next</div>
+                        </div>
             case "about":
                 return `           <div class="welcome-wrapper">
                         <div class="welcome card">
@@ -44,6 +42,6 @@ export default (function (){
                         </div>
                     </div>`
         }
-    } 
-    return {renderPage}
+    }
+    return {createPages}
 })();
