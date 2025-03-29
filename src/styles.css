@@ -1,15 +1,12 @@
-*{
-    /* outline: 1px solid firebrick; */
-}
+
 :root {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --clr-light: rgb(255 255 255);
     --clr-dark: rgb(0 0 0);
-    --clr-primary: rgb(7, 7, 7);
-    --clr-secondary: rgb(0 150 0);
-    --clr-teritiary: rgb(150 0 0);
-    --fsr:1rem;
-    --fse: 1em;
+    --clr-secondary-light: rgb(0 255 0);
+    --clr-teritiary: rgb(255 255 0);
+    --fsr:1.2rem;
+    --fse: 1.2em;
 }
 body,
 html {
@@ -21,13 +18,19 @@ body {
     flex-direction: column;
 }
 header {
+    position: sticky;
+    top: 0;
+    min-height: 7%;
+    z-index: 3;
+
     flex: 1;
     display: flex;
     justify-content: center;
     gap: calc(1.5 * var(--fse, 1em));
 
-    background-color: var(--clr-primary, rgb(200 185 135));
-    padding-inline-start:calc(.5 * var(--fse, 1em));
+    background-color: var(--clr-dark, rgb(0 0 0));
+    box-shadow: 0em 0em calc(.125 * var(--fse, 1em)) var(--clr-light,(255 255 255));
+    padding:calc(.5 * var(--fse, 1em));
 }
 header > a {
     display: flex;
@@ -47,6 +50,9 @@ header > a {
         white-space: nowrap; 
     }
 }
+header > a:hover svg{
+    fill: var(--clr-secondary-light, rgb(0 255 0))
+}
 header > nav {
     flex: 1;
     display: flex;
@@ -54,6 +60,7 @@ header > nav {
     gap:calc(2 * var(--fse, 1em));
 
     .btn{
+        position: relative;
         padding: calc(.125 * var(--fse, 1em)) calc(.5 * var(--fse, 1em));
 
         border: none;
@@ -69,11 +76,20 @@ header > nav {
     }
     .btn:hover:not(.active) {
         box-shadow: inset 0 0 .5em 0em var(--clr-light, rgb(255 255 255));
-        
+    }
+    .btn div{
+        position: absolute;
+        bottom: 0;
+        left:50%;
+        transform: translateX(-50%);
+        width:0;
+        border-bottom: 0 solid var(--clr-light, rgb(255 255 255));
+        transition: all .5s ease-in-out;
     }
     .btn.active div{
-        width: 100%;
-        border-bottom: calc(.1 * var(--fse, 1em)) solid var(--clr-light, rgb(255 255 255));
+        width: 70%;
+        border-bottom-width: calc(.125 * var(--fse, 1em));
+        transition: all .5s ease-in-out;
     }
 }
 
@@ -82,7 +98,7 @@ main {
 }
 .content {
     display:none;
-    flex-direction: column;
+    flex-direction: row;
 }
 main,
 .content {
@@ -92,14 +108,10 @@ html.home .content#home,
 html.menu .content#menu,
 html.about .content#about {
     display: flex;
+    transition: opacity 3s;
 }
-@media(min-width: 37.5em) {
-    .content {
-        flex-direction: row;
-    }
-} 
 
-
+/* home page */
 .welcome-wrapper,
 .image-container {
     flex: 50%;
@@ -107,7 +119,7 @@ html.about .content#about {
     justify-content: center;
     align-items: center;
 
-    transition: background-size 1s ease-in-out, flex .5s ease-in-out;
+    transition: background-size 3s ease-in-out, flex 1s ease-in-out;
     background-position: center center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -126,7 +138,6 @@ html.about .content#about {
 .welcome-wrapper:hover,
 .image-container:hover {
     flex: 1 1 70%;
-
     background-size: 110% 110%;
 }
 
@@ -135,7 +146,7 @@ html.about .content#about {
 
     font-size: calc(1 * var(--fse, 1em));
     color: rgb(from var(--clr-light, rgb(255 255 255)) r g b /.8);
-    background: var(--clr-primary);
+    background: var(--clr-dark, rgb(0 0 0));
     border: none;
     transition: all .5s;
 }
@@ -180,17 +191,142 @@ html.about .content#about {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 1s ease-in;
+    transition: all .5s ease-out;
 }
 
+/* menu and about page */
+html.menu body,
+html.about body {
+    background-image: url("./imgs/foodiesfeed.com_fresh-vegetables.jpg");
+    background-position: center center;
+    background-size: cover;
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+}
+html.menu body {
+    background-image: url("./imgs/foodiesfeed.com_fresh-vegetables.jpg");
+}
+html.about body {
+    background-image: url("./imgs/restaurant-joy-DALL-E.webp");
+}
+.about.card,
+.menu.card {
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    margin-block: 1.5%;
+    padding-block: calc(1 * var(--fse, 1em)) calc(3 * var(--fse, 1em));
+    padding-inline: calc(3 * var(--fse, 1em)) calc(2.5 * var(--fse, 1em));
+}
 
+/* menu page */
+#menu > button {
+    position: fixed;
+    top: 50%;
+    font-size: calc(4 * var(--fsr, 1rem));
+    color: rgb(from var(--clr-light, rgb(255 255 255)) r g b /.8);
+    background: none;
+    border: none;
+}
+#menu > button:hover {
+    font-size: calc(5 * var(--fsr, 1rem));
+    color: var(--clr-light, rgb(255 255 255));
+    cursor:pointer;    
+}
+#menu > button.next{
+    right: 25%;
+    transform: translate(100%,-50%);
+    text-align: start;
+}
+#menu > button.previous{
+    left: 25%;
+    transform: translate(-100%, -50%);
 
+    text-align: end;
+}
+.menu.card{
+
+    min-height:80%;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+
+    h2 {
+        font-size: calc(2 * var(--fsr, 1rem));
+        line-height: 1;
+        font-style: bold;
+        text-transform:capitalize;
+        text-align: center; 
+        font-family: "Italianno", cursive, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    ul {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(.5 * var(--fse,1em));
+        padding-inline-start: 0;    
+
+        li{
+            flex: 1;
+            display: flex;
+            text-overflow: clip;
+            gap: calc(.5 * var(--fse, 1em));
+
+            .name{
+                min-width:calc(8 * var(--fse,1em));
+            }
+            .sep{
+                flex: 100%;
+                align-self: center;
+                white-space: nowrap;
+                text-overflow:clip;
+                overflow: hidden;
+            }
+            .price{
+                text-align: start;
+                align-self: center;
+                min-width: calc(2 * var(--fse,1em));
+            }
+            .price::before{
+                content:"$";
+                color: var(--clr-teritiary, rgb(255 255 0));
+            }
+        }
+    }
+}
+.menu.card.active {
+    visibility: visible;
+    z-index: 2;
+    opacity: 1;
+    transition: all 2s ease-in-out;
+}
+
+/* about page */
+.about.card {
+    gap: calc(2 * var(--fse, 1em));
+    p {
+        text-indent: calc(1 * var(--fse, 1em));
+    }
+    a {
+        text-decoration-line: none;
+        color: var(--clr-secondary-light, rgb(0 255 0));
+    }
+    a:hover {
+        color: var(--clr-teritiary, rgb(250 250 0));
+    }
+
+}
+
+/* card general */
 .card {
     
-    /* position and sizeing */
-    position: relative;
+    /* position and sizing */
     padding: calc(3 * var(--fse, 1em));
-    width:22em;
+    width:calc(22 * var(--fse, 1em));
 
 
     /* decore */
@@ -231,3 +367,46 @@ html.about .content#about {
 .strong{
     font-weight: 700;
 }
+
+
+@media(max-width: 56.25em) {
+    :root{
+        --fse: .875em;
+        --fsr: .875rem;
+    }
+    .content {
+        flex-direction: column;
+    }
+    #menu > button {
+        font-size: calc(2.5 * var(--fsr, 1rem));
+    }
+    #menu > button:hover {
+        font-size: calc(3 * var(--fsr, 1rem));
+    }
+    #menu > button.next{
+        right: 10%;
+        transform: translate(100%,-50%);
+    }
+    #menu > button.previous{
+        left: 10%;
+        transform: translate(-100%, -50%);
+    }
+    .card.menu,
+    .card.about{
+        width: 80%;
+    }
+    .card.menu ul li .price {
+        margin-inline-start: auto;
+    }
+    .sep {
+        display:none;
+    }
+    .card.menu ul li {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .card.menu ul {
+        gap: calc(1.25 * var(--fse, 1em));
+    }
+}  

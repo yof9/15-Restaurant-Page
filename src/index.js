@@ -1,12 +1,11 @@
-// import css;
+// sideffect import css;
 import "./modern-normalize-customized.css";
 import "./styles.css";
 
+// import modules
 import events from "./pubsub.js";
 import pages from "./pages.js";
 import { loadImages } from "./images.js";
-
-
 
 // cache dom
 (function domCacher(){
@@ -22,8 +21,8 @@ import { loadImages } from "./images.js";
     }
 })();
 
-// render main elmt for any page
-(function pageController(){
+// initialize site
+(function pageInitializer(){
     
     events.on("domCached", init);
 
@@ -32,11 +31,16 @@ import { loadImages } from "./images.js";
             dom.main.innerHTML += p.at(i).outerHTML;
         }
 
-        //init with home page and cache wrapper
+        //initialize site with home page and cache image-wrapper and carousel btns
         dom.html.classList.add("home");
+
+        dom.menus = document.querySelectorAll(".card.menu");  
+
         dom.imageWrapper = document.querySelector("main .image-wrapper");
-        dom.carouselBtns = document.querySelectorAll("main .image-container button");  
-        console.log(dom.carouselBtns)
+        
+        dom.carouselImgBtns = document.querySelectorAll("#home button"); 
+        dom.carouselMenuBtns = document.querySelectorAll("#menu button");
+ 
         events.emit("pageInit", dom)
     }
 
@@ -49,42 +53,46 @@ import { loadImages } from "./images.js";
     events.on("pageInit", attachCarouselBtnListeners);
     
     function attachNavBtnLsiteners(dom) {
+
         // For each btn onclick notify change of page
         dom.navBtns.forEach(btn => {
             btn.onclick = () => {
                 dom.html.className = btn.classList[0];
-                events.emit("pageChange", {
-                    dom,
-                    page: btn.classList[0] 
-                })
+                events.emit("pageChange", dom)
             }
         });
     }
     function attachCarouselBtnListeners(dom) {
-        dom.carouselBtns.forEach(btn => {
+
+        dom.carouselImgBtns.forEach(btn => {
             btn.onclick = () => {
-                carousel.rotate(btn.className);
+                imgCarousel.rotate(btn.className);
+            }
+        });
+        dom.carouselMenuBtns.forEach(btn => {
+            btn.onclick = () => {
+                menuCarousel.rotate(btn.className);
             }
         });
     }
 })();
 
-// Active effect for nav btns
+// Active effect for nav btns, listenerAttacher helper
 (function activateNavBtns() {
 
     events.on("pageChange", activateNavBtn);
 
-    function activateNavBtn({dom, page}) {
+    function activateNavBtn(dom) {
         dom.navBtns.forEach((btn) => {
-            btn.classList.contains(page) ?
+            btn.classList.contains(dom.html.className) ?
                 btn.classList.add("active") :
                 btn.classList.remove("active");
         });    
     }
 })();
 
-// add auto image swap functionality
-const carousel = (function (){
+// add home page image carousel functionality
+const imgCarousel = (function (){
     document.addEventListener("DOMContentLoaded", cacheImgs);
     events.on("pageInit", startCarousel);
     events.on("pageChange", continueCaoursel);
@@ -106,7 +114,7 @@ const carousel = (function (){
         // first image
         setCarouselImgs();
     }
-    function continueCaoursel({dom, page}) {
+    function continueCaoursel(dom) {
 
         // if change not to home page
         if (!dom.html.classList.contains("home")) {
@@ -119,6 +127,7 @@ const carousel = (function (){
 
     // add funcitionality for next and previous, next not needed as already increamnted
     function rotate(action) {
+        console.log(action)
         clearInterval(intervalId);
         i = action === "previous" ? ((i-2) + 13) % 13 : i
         setCarouselImgs(true);
@@ -136,16 +145,65 @@ const carousel = (function (){
         setTimeout(()=>{
             imageWrapper.classList.remove("disappear");
             imageWrapper.classList.add("appear");
-            // imageWrapper.className = "image-wrapper appear";
             imageWrapper.innerHTML = imgs[i].outerHTML;
         },1000)
         i = ++i % 13;            
     }
-
     
     return {rotate}
 })();
 
-// create menu
+// menu carousel
+const menuCarousel = (function (){
+    events.on("pageInit", cacheMenus);
+    events.on("pageChange", continueMenuCaoursel);
+        
+        let intervalId = null, 
+            menus = null,
+            menuContainer = null,
+            activated = null,
+            i = 2,
+            positions = ["left", "right"];
 
-// create about
+    // Logic
+    function cacheMenus(dom) {
+        menus = Array.from(dom.menus);
+    }
+    function continueMenuCaoursel(dom) {
+
+        // if change not to menu page stop carousel at current
+        if (!dom.html.classList.contains("menu")) {
+            intervalId ? clearInterval(intervalId) : undefined;
+        } else {
+            // continue interval
+            setCarouselMenu(activated ? false : true);
+        }
+    }
+
+    // carousel
+    function setCarouselMenu(immediate) {
+        if (immediate) {
+            menuChanger();
+        }
+        intervalId = setInterval(menuChanger, 20000);
+    }
+    function menuChanger() {
+        
+        activated ? activated.classList.remove("active") : undefined;
+
+        setTimeout(()=>{
+            menus[i].classList.add("active");
+            activated = menus[i]
+        },500)
+        i = ++i % 3;            
+    }
+    
+    // add funcitionality for next and previous, next not needed as already incremented
+    function rotate(action) {
+        clearInterval(intervalId);
+        i = action === "previous" ? ((i-2) + 3) % 3 : i
+        setCarouselMenu(true);
+    }
+
+    return {rotate}
+})();

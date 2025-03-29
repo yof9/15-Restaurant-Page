@@ -1,4 +1,7 @@
 export function loadImages() {
+
+    // require context takes folder to import, boolean whether to import sub directories, and
+    // regex(pattern) of file types and returns object with as paths as keys, Brave AI
     const imagesContext = require.context('./imgs/carousel_imgs', false, /\.webp$/);
    
     const images = [];

@@ -1,0 +1,54 @@
+ {
+    "Food": [
+      { "name": "Vegan Burger", "price": 12 },
+      { "name": "Quinoa Salad", "price": 10 },
+      { "name": "Vegan Pizza", "price": 15 },
+      { "name": "Tofu Stir-fry", "price": 13 },
+      { "name": "Vegan Sushi", "price": 14 },
+      { "name": "Lentil Soup", "price": 8 },
+      { "name": "Stuffed Bell Peppers", "price": 11 },
+      { "name": "Vegan Lasagna", "price": 16 },
+      { "name": "Sweet Potato Fries", "price": 7 },
+      { "name": "Vegan Pad Thai", "price": 14 },
+      { "name": "Chickpea Curry", "price": 12 },
+      { "name": "Vegan Burrito", "price": 10 },
+      { "name": "Cauliflower Wings", "price": 9 },
+      { "name": "Vegan Pancakes", "price": 8 },
+      { "name": "Avocado Toast", "price": 6 }
+    ],
+    "Drinks": [
+      { "name": "Almond Milk Latte", "price": 5 },
+      { "name": "Matcha Green Tea", "price": 4 },
+      { "name": "Vegan Hot Chocolate", "price": 6 },
+      { "name": "Berry Smoothie", "price": 7 },
+      { "name": "Golden Turmeric Latte", "price": 5 },
+      { "name": "Cucumber Lemonade", "price": 4 },
+      { "name": "Vegan Bubble Tea", "price": 6 },
+      { "name": "Watermelon Juice", "price": 3 },
+      { "name": "Pumpkin Spice Latte", "price": 5 },
+      { "name": "Raspberry Iced Tea", "price": 4 },
+      { "name": "Vanilla Soy Milkshake", "price": 6 },
+      { "name": "Apple Cider", "price": 4 },
+      { "name": "Coconut Water", "price": 3 },
+      { "name": "Chai Tea Latte", "price": 5 },
+      { "name": "Mint Mojito Mocktail", "price": 7 }
+    ],
+    "Wine List": [
+      { "name": "Domane Wachau Gruner Veltliner", "price": 20 },
+      { "name": "Penny’s Hill Shiraz", "price": 25 },
+      { "name": "Yealands Sauvignon Blanc", "price": 18 },
+      { "name": "Champagne de Saint Gall", "price": 30 },
+      { "name": "Lakeview Brut", "price": 22 },
+      { "name": "La Chablisienne Grenouilles", "price": 28 },
+      { "name": "Skeleton Key Shiraz", "price": 24 },
+      { "name": "Vegan Pinot Noir", "price": 26 },
+      { "name": "Vegan Chardonnay", "price": 19 },
+      { "name": "Vegan Merlot", "price": 21 },
+      { "name": "Vegan Rosé", "price": 20 },
+      { "name": "Vegan Riesling", "price": 18 },
+      { "name": "Vegan Cabernet Sauvignon", "price": 23 },
+      { "name": "Vegan Zinfandel", "price": 22 },
+      { "name": "Vegan Prosecco", "price": 20 }
+    ]
+}
+    
